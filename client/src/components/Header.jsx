@@ -1,4 +1,5 @@
 import { profile } from '../data.js';
+import Reveal from './Reveal.jsx';
 
 const links = [['Projects', '#projects'], ['Skills', '#skills'], ['Experience', '#experience'], ['Contact', '#contact']];
 

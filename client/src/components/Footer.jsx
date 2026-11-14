@@ -1,4 +1,5 @@
 import { profile } from '../data.js';
+import Reveal from './Reveal.jsx';
 
 export default function Footer() {
   return (
