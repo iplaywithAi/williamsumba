@@ -1,6 +1,8 @@
-import { FaArrowUpRightFromSquare, FaCode } from 'react-icons/fa6';
+import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
 import { projects } from '../data.js';
 import Reveal from './Reveal.jsx';
+
+const isLink = (url) => typeof url === 'string' && url.startsWith('http');
 
 export default function Projects() {
   return (
@@ -13,7 +15,7 @@ export default function Projects() {
               as="article"
               key={p.title}
               delay={i * 90}
-              className="grid gap-4 py-7 md:grid-cols-[1fr_1.6fr_auto] md:gap-10"
+              className="grid gap-5 py-7 md:grid-cols-[1fr_1.6fr_11rem] md:gap-10"
             >
               <h3 className="text-xl font-bold">{p.title}</h3>
 
@@ -28,19 +30,29 @@ export default function Projects() {
 
                 <ul className="mt-4 flex flex-wrap gap-2">
                   {p.stack.map((s) => <li key={s} className="chip">{s}</li>)}
+
                 </ul>
               </div>
 
-              <div className="flex items-start gap-4 text-sm font-semibold">
-                {p.demo && p.demo !== '#' && (
-                  <a href={p.demo} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-accent hover:text-accent-dark">
-                    <FaArrowUpRightFromSquare aria-hidden className="h-3.5 w-3.5" /> Live
+              <div className="md:flex md:items-start">
+                {isLink(p.demo) ? (
+                  <a
+                    href={p.demo}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-primary w-full justify-center"
+                    aria-label={`View project: ${p.title}`}
+                  >
+                    <FaArrowUpRightFromSquare aria-hidden className="h-3.5 w-3.5" /> View project
                   </a>
-                )}
-                {p.code && p.code !== '#' && (
-                  <a href={p.code} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-accent hover:text-accent-dark">
-                    <FaCode aria-hidden className="h-3.5 w-3.5" /> Code
-                  </a>
+                ) : (
+                  <span
+                    className="btn w-full cursor-not-allowed justify-center border border-line bg-slate-100 text-slate-400"
+                    aria-disabled="true"
+                    title="Live version coming soon"
+                  >
+                    <FaArrowUpRightFromSquare aria-hidden className="h-3.5 w-3.5" /> View project
+                  </span>
                 )}
               </div>
             </Reveal>

@@ -12,9 +12,9 @@ const strengths = [
 const details = [
   ['name', `"${profile.name}"`],
   ['alias', `"${profile.alias}"`],
-  ['roles', '["Web Developer", "Data Extraction"]'],
-  ['stack', '["React", "Node", "Express", "Puppeteer"]'],
-  ['learning', '"Network administration"'],
+  ['roles', '["Web Developer", "Data Extraction Expert"]'],
+  ['stack', '["React", "Node", "Express", "MongoDB", "Firebase", "SQLite", "Puppeteer"]'],
+  ['learning', '["Network administration","Network management"]'],
 ];
 
 // Reveals items one at a time; shows everything at once if the visitor prefers reduced motion.
@@ -42,10 +42,10 @@ export default function Hero() {
       <div>
         <p className="enter mb-4 text-sm font-medium text-mute" style={d(0)}>Also known as {profile.alias}</p>
         <h1 className="enter text-4xl font-extrabold leading-[1.1] sm:text-5xl" style={d(100)}>
-          Web developer who turns messy web data into working products.
+        Software engineer who turns messy web data into working products.
         </h1>
         <p className="enter mt-5 max-w-xl text-lg leading-relaxed text-mute" style={d(220)}>
-          I build React and Node applications and the scrapers that feed them: collecting, cleaning and organizing data from the web.
+          I help businesses and individuals build useful digital products and get the data they need to run them.
         </p>
         <div className="enter mt-8 flex flex-wrap gap-3" style={d(340)}>
           <a href="#projects" className="btn btn-primary"><FaArrowDown aria-hidden /> View projects</a>
@@ -70,7 +70,7 @@ export default function Hero() {
           <span className="flex items-center gap-2 text-xs text-slate-300">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="relative inline-flex h-2 w-3 rounded-full bg-emerald-400" />
             </span>
             Open to projects
           </span>

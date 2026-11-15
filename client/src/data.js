@@ -6,7 +6,7 @@ const env = import.meta.env;
 // TODO: replace the placeholders below with your real details.
 export const profile = {
   name: 'Sumba William',
-  alias: 'iplaywithA',
+  alias: 'iplaywithAI',
   email: import.meta.env.VITE_CONTACT_EMAIL || 'you@example.com',
   phone: import.meta.env.VITE_CONTACT_PHONE || '+254 700 000 000',
   location: 'Kenya',
