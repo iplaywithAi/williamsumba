@@ -3,7 +3,7 @@ import { FaDesktop, FaServer, FaDatabase, FaSpider, FaNetworkWired, FaCode } fro
 import { SiReact, SiVite, SiTailwindcss, SiJavascript, SiNodedotjs, SiExpress, SiMongodb, SiFirebase, SiSqlite, SiPuppeteer, SiAxios } from 'react-icons/si';
 const env = import.meta.env;
 
-// TODO: replace the placeholders below with your real details.
+
 export const profile = {
   name: 'Sumba William',
   alias: 'iplaywithAI',
@@ -28,7 +28,7 @@ export const skillGroups = [
   { title: 'Networking', icon: FaNetworkWired, items: [['Network management', FaNetworkWired], ['Network administration', FaNetworkWired]], note: 'Currently learning' },
 ];
 
-// Newest first. TODO: confirm roles, dates and add real highlights.
+
 export const experience = [
   {
     org: 'Wavex Internet Service Providers',

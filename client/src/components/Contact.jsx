@@ -1,36 +1,52 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaEnvelope, FaPhone, FaLocationDot, FaPaperPlane } from 'react-icons/fa6';
 import { profile, socials } from '../data.js';
 import Reveal from './Reveal.jsx';
 
 const field = 'mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm placeholder:text-slate-400';
+const EMPTY = { name: '', email: '', message: '', website: '' };
+const TOAST_MS = 4000;
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: '', email: '', message: '', website: '' });
-  const [status, setStatus] = useState({ type: 'idle', text: '' });
-  const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  const [form, setForm] = useState(EMPTY);
+  const [sending, setSending] = useState(false);
+  const [toast, setToast] = useState(null); // { type: 'ok' | 'error', text }
+
+  // Toast disappears on its own
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), TOAST_MS);
+    return () => clearTimeout(timer);
+  }, [toast]);
+
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   async function submit(e) {
     e.preventDefault();
-    setStatus({ type: 'loading', text: 'Sending...' });
+    setSending(true);
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Request failed.');
-      setStatus({ type: 'ok', text: 'Message sent. I will reply by email.' });
-      setForm({ name: '', email: '', message: '', website: '' });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Request failed.');
+
+      setToast({ type: 'ok', text: data.message || 'Message sent. I will reply by email.' });
+      setForm(EMPTY);
     } catch (err) {
-      setStatus({ type: 'error', text: `${err.message} You can also email ${profile.email}.` });
+      const reason = err instanceof TypeError
+        ? 'Network error. Check your connection.'
+        : err.message;
+      setToast({ type: 'error', text: `${reason} You can also email ${profile.email}.` });
+    } finally {
+      setSending(false);
     }
   }
 
   const rows = [
     [FaEnvelope, 'Email', profile.email, `mailto:${profile.email}`],
-
     [FaPhone, 'Phone', profile.phone, `tel:${profile.phone.replace(/\s/g, '')}`],
     [FaLocationDot, 'Based in', profile.location],
   ];
@@ -63,7 +79,6 @@ export default function Contact() {
               <li key={label}>
                 <a
                   href={href}
-
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
@@ -87,18 +102,30 @@ export default function Contact() {
             <label className="mt-4 block text-sm font-semibold">Message
               <textarea rows="5" className={field} value={form.message} onChange={set('message')} required />
             </label>
-            <input className="hidden" tabIndex="-1" autoComplete="off" aria-hidden value={form.website} onChange={set('website')} />
-            <div className="mt-5 flex flex-wrap items-center gap-4">
-              <button className="btn btn-primary disabled:opacity-60" disabled={status.type === 'loading'}>
-                <FaPaperPlane aria-hidden /> Send message
-              </button>
-              <p role="status" className={`text-sm ${status.type === 'error' ? 'text-red-700' : status.type === 'ok' ? 'text-accent-dark' : 'text-mute'}`}>
-                {status.text}
-              </p>
-            </div>
 
+            {/* Honeypot: hidden from people, bots tend to fill it */}
+            <input className="hidden" tabIndex="-1" autoComplete="off" aria-hidden value={form.website} onChange={set('website')} />
+
+            <div className="mt-5">
+              <button className="btn btn-primary disabled:opacity-60" disabled={sending}>
+                <FaPaperPlane aria-hidden /> {sending ? 'Sending...' : 'Send message'}
+              </button>
+            </div>
           </form>
         </Reveal>
+      </div>
+
+      {/* Toast sits outside the form and the Reveal wrappers so fixed positioning works */}
+      <div role="status" aria-live="polite" className="pointer-events-none fixed bottom-6 right-6 z-50 max-w-sm">
+        {toast && (
+          <div
+            className={`pointer-events-auto rounded-md px-4 py-3 text-sm text-white shadow-lg ${
+              toast.type === 'ok' ? 'bg-accent-dark' : 'bg-red-700'
+            }`}
+          >
+            {toast.text}
+          </div>
+        )}
       </div>
     </section>
   );
