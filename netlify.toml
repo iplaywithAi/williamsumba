@@ -5,7 +5,7 @@
 # API requests go to the Render server (this rule must come first)
 [[redirects]]
   from = "/api/*"
-  to = "https://digest-api.onrender.com/api/:splat"
+  to = 
   status = 200
   force = true
 
