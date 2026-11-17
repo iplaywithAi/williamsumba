@@ -1,0 +1,16 @@
+[build]
+  command = "cd client && npm ci && npm run build"
+  publish = "client/dist"
+
+# API requests go to the Render server (this rule must come first)
+[[redirects]]
+  from = "/api/*"
+  to = "https://digest-api.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# Single page app fallback: unknown paths load index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
