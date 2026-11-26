@@ -63,8 +63,7 @@ export default function Footer() {
         <div className="container-x flex flex-wrap items-center justify-between gap-3 py-5">
           <span>© {year} {profile.name} ({profile.alias}). All rights reserved.</span>
           <span className="flex flex-wrap items-center gap-4">
-            <span>Built with React, Tailwind CSS and Vite</span>
-            <a href="#top" className="inline-flex items-center gap-2 font-semibold text-ink transition-colors hover:text-accent">
+              <a href="#top" className="inline-flex items-center gap-2 font-semibold text-ink transition-colors hover:text-accent">
               Back to top <FaArrowUp aria-hidden className="h-3 w-3" />
             </a>
           </span>
