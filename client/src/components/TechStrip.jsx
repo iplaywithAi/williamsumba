@@ -1,6 +1,6 @@
 import { skillGroups } from '../data.js';
 
-
+// Every skill from data.js, once each, so the strip updates when you add skills.
 const tech = [...new Map(skillGroups.flatMap((g) => g.items))];
 
 export default function TechStrip() {
