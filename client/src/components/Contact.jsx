@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
-import { FaEnvelope, FaPhone, FaLocationDot, FaPaperPlane } from 'react-icons/fa6';
+import {
+  FaEnvelope, FaPhone, FaLocationDot, FaPaperPlane,
+  FaCircleCheck, FaTriangleExclamation,
+} from 'react-icons/fa6';
 import { profile, socials } from '../data.js';
 import Reveal from './Reveal.jsx';
 
-const field = 'mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm placeholder:text-slate-400';
+const field =
+  'mt-1.5 w-full rounded-md border border-line bg-white px-3 py-2.5 text-sm placeholder:text-slate-400 transition-colors hover:border-slate-300 focus:border-accent';
 const EMPTY = { name: '', email: '', message: '', website: '' };
 const TOAST_MS = 4000;
 
@@ -45,33 +49,48 @@ export default function Contact() {
     }
   }
 
+  // Each contact row gets its own gradient tile, matching the Skills section.
   const rows = [
-    [FaEnvelope, 'Email', profile.email, `mailto:${profile.email}`],
-    [FaPhone, 'Phone', profile.phone, `tel:${profile.phone.replace(/\s/g, '')}`],
-    [FaLocationDot, 'Based in', profile.location],
+    [FaEnvelope, 'Email', profile.email, `mailto:${profile.email}`, 'from-sky-500 to-indigo-500'],
+    [FaPhone, 'Phone', profile.phone, `tel:${profile.phone.replace(/\s/g, '')}`, 'from-violet-500 to-fuchsia-500'],
+    [FaLocationDot, 'Based in', profile.location, null, 'from-emerald-500 to-teal-500'],
   ];
 
   return (
     <section id="contact" className="section">
       <div className="container-x grid gap-12 lg:grid-cols-2">
-        <Reveal>
+        <Reveal className="min-w-0">
           <h2 className="text-2xl font-bold sm:text-3xl">Contact</h2>
-          <p className="mt-3 max-w-md text-mute">Have a project, a data problem or a role to discuss? Send a message.</p>
 
-          <ul className="mt-8 space-y-4">
-            {rows.map(([Icon, label, value, href]) => (
-              <li key={label} className="flex items-center gap-4">
-                <span className="flex h-10 w-10 items-center justify-center rounded-md bg-accent-soft text-accent">
-                  <Icon aria-hidden />
-                </span>
-                <span>
-                  <span className="block text-xs text-mute">{label}</span>
-                  {href
-                    ? <a href={href} className="font-semibold hover:text-accent">{value}</a>
-                    : <span className="font-semibold">{value}</span>}
-                </span>
-              </li>
-            ))}
+       
+          <p className="mt-4 max-w-md text-mute">Have a project, a data problem or a role to discuss? Send a message.</p>
+
+          <ul className="mt-8 space-y-3">
+            {rows.map(([Icon, label, value, href, tile]) => {
+              const inner = (
+                <>
+                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${tile} text-white shadow-sm transition-transform duration-300 group-hover:scale-110`}>
+                    <Icon aria-hidden />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-xs text-mute">{label}</span>
+                    <span className="block truncate font-semibold">{value}</span>
+                  </span>
+                </>
+              );
+              const base = 'group flex items-center gap-4 rounded-lg border border-line bg-white px-4 py-3 shadow-sm transition-all duration-300';
+              return (
+                <li key={label}>
+                  {href ? (
+                    <a href={href} className={`${base} hover:-translate-y-0.5 hover:border-accent hover:shadow-md`}>
+                      {inner}
+                    </a>
+                  ) : (
+                    <div className={base}>{inner}</div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
 
           <ul className="mt-8 flex gap-3" aria-label="Social links">
@@ -82,7 +101,7 @@ export default function Contact() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="flex h-10 w-10 items-center justify-center rounded-md border border-line bg-white text-mute transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+                  className="flex h-10 w-10 items-center justify-center rounded-md border border-line bg-white text-mute transition hover:-translate-y-0.5 hover:border-accent hover:text-accent hover:shadow-md"
                 >
                   <Icon aria-hidden className="h-4 w-4" />
                 </a>
@@ -91,8 +110,11 @@ export default function Contact() {
           </ul>
         </Reveal>
 
-        <Reveal delay={120}>
-          <form onSubmit={submit} className="rounded-lg border border-line bg-white p-6" noValidate>
+        <Reveal delay={120} className="min-w-0">
+          <form onSubmit={submit} className="card md:p-7" noValidate>
+            <h3 className="mb-1 text-lg font-bold">Send a message</h3>
+            <p className="mb-5 text-sm text-mute">I read every message and reply by email.</p>
+
             <label className="block text-sm font-semibold">Name
               <input className={field} value={form.name} onChange={set('name')} autoComplete="name" required />
             </label>
@@ -107,7 +129,7 @@ export default function Contact() {
             <input className="hidden" tabIndex="-1" autoComplete="off" aria-hidden value={form.website} onChange={set('website')} />
 
             <div className="mt-5">
-              <button className="btn btn-primary disabled:opacity-60" disabled={sending}>
+              <button className="btn btn-primary w-full justify-center disabled:opacity-60 sm:w-auto" disabled={sending}>
                 <FaPaperPlane aria-hidden /> {sending ? 'Sending...' : 'Send message'}
               </button>
             </div>
@@ -119,11 +141,16 @@ export default function Contact() {
       <div role="status" aria-live="polite" className="pointer-events-none fixed bottom-6 right-6 z-50 max-w-sm">
         {toast && (
           <div
-            className={`pointer-events-auto rounded-md px-4 py-3 text-sm text-white shadow-lg ${
-              toast.type === 'ok' ? 'bg-accent-dark' : 'bg-red-700'
+            className={`pointer-events-auto flex items-start gap-3 rounded-lg px-4 py-3 text-sm text-white shadow-xl ${
+              toast.type === 'ok'
+                ? 'bg-gradient-to-r from-accent to-violet-600'
+                : 'bg-red-700'
             }`}
           >
-            {toast.text}
+            {toast.type === 'ok'
+              ? <FaCircleCheck aria-hidden className="mt-0.5 shrink-0" />
+              : <FaTriangleExclamation aria-hidden className="mt-0.5 shrink-0" />}
+            <span>{toast.text}</span>
           </div>
         )}
       </div>

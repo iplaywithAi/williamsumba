@@ -1,6 +1,10 @@
 import { FaGithub, FaLinkedinIn, FaXTwitter, FaWhatsapp, FaInstagram } from 'react-icons/fa6';
-import { FaDesktop, FaServer, FaDatabase, FaSpider, FaNetworkWired, FaCode } from 'react-icons/fa6';
-import { SiReact, SiVite, SiTailwindcss, SiJavascript, SiNodedotjs, SiExpress, SiMongodb, SiFirebase, SiSqlite, SiPuppeteer, SiAxios } from 'react-icons/si';
+import { FaDesktop, FaServer, FaDatabase, FaSpider, FaNetworkWired, FaCode, FaScrewdriverWrench } from 'react-icons/fa6';
+import {
+  SiReact, SiVite, SiTailwindcss, SiJavascript, SiBootstrap, SiNodedotjs, SiExpress,
+  SiMongodb, SiFirebase, SiSqlite, SiPostgresql, SiPuppeteer, SiAxios,
+  SiGit, SiPostman, SiVercel, SiNetlify, SiDocker,
+} from 'react-icons/si';
 const env = import.meta.env;
 
 
@@ -21,11 +25,12 @@ export const socials = [
 ].filter((s) => s.href);
 
 export const skillGroups = [
-  { title: 'Frontend', icon: FaDesktop, items: [['React', SiReact], ['Vite', SiVite], ['Tailwind CSS', SiTailwindcss], ['JavaScript', SiJavascript]] },
+  { title: 'Frontend', icon: FaDesktop, items: [['JavaScript', SiJavascript], ['React', SiReact], ['Tailwind CSS', SiTailwindcss], ['Bootstrap', SiBootstrap]] },
   { title: 'Backend', icon: FaServer, items: [['Node.js', SiNodedotjs], ['Express', SiExpress], ['REST APIs', FaCode]] },
-  { title: 'Data storage', icon: FaDatabase, items: [['MongoDB', SiMongodb], ['Firebase', SiFirebase], ['SQLite', SiSqlite]] },
+  { title: 'Data storage', icon: FaDatabase, items: [['MongoDB', SiMongodb], ['Firebase', SiFirebase], ['SQLite', SiSqlite], ['PostgreSQL', SiPostgresql]] },
+  { title: 'Tools', icon: FaScrewdriverWrench, items: [['Vite', SiVite], ['Git / GitHub', SiGit], ['Postman', SiPostman], ['Vercel', SiVercel], ['Netlify', SiNetlify], ['Docker', SiDocker]] },
   { title: 'Web data extraction', icon: FaSpider, items: [['Puppeteer', SiPuppeteer], ['Cheerio', FaCode], ['Axios', SiAxios], ['Data cleaning', FaCode], ['Scheduled scraping', FaCode]] },
-  { title: 'Networking', icon: FaNetworkWired, items: [['Network management', FaNetworkWired], ['Network administration', FaNetworkWired]], note: 'Currently learning' },
+  { title: 'Networking', icon: FaNetworkWired, items: [['Network administration', FaNetworkWired]], note: 'Currently exploring' },
 ];
 
 
@@ -39,6 +44,17 @@ export const experience = [
       'Explain technical options in plain language to home and business clients.',
       'Gather customer requirements and pass them to the technical team.',
       'Build practical knowledge of network management and administration.',
+    ],
+  },
+  {
+    org: 'Self-Employed',
+    role: 'Web Data Extraction & Scraping Specialist',
+    period: '2023 – Present',
+    points: [
+      'Build scrapers with Puppeteer, Cheerio and Axios to pull data from complex, dynamic websites.',
+      'Clean, sort and structure raw data into formats businesses can use right away.',
+      'Turn scraped data into insights that help organisations make informed decisions.',
+      'Deliver reliable, repeatable data pipelines tailored to each client\'s needs.',
     ],
   },
   {
@@ -68,7 +84,14 @@ export const projects = [
   {
     title: 'Deals and Picks',
     text: 'Price tracking across online stores. Scrapers collect listings on a schedule and store every price change so trends can be viewed over time.',
-    stack: ['React', 'Express', 'SQLite', 'Puppeteer', 'Cron'],
+    stack: ['React', 'Express', 'PostgreSQL', 'Puppeteer','Node.js', 'Tailwind CSS'],
+    demo: '#',
+    code: '#',    
+  },
+  {
+    title: 'Feel Good Closet',
+    text: 'An online store for a clothing shop selling dresses, hoodies, shoes and t-shirts. Shoppers can browse by category, view product details and build a cart, while the shop owner gets a simple way to keep the catalogue up to date.',
+    stack: ['React', 'Tailwind CSS', 'Node.js', 'Express', 'PostgreSQL'],
     demo: '#',
     code: '#',
   },
@@ -78,4 +101,10 @@ export const projects = [
     stack: ['Node.js', 'WebSockets'],
     code: '#',
   },
+];
+
+export const now = [
+  ['working_on', '["Deals and Picks", "Feel Good Closet"]'],
+  ['exploring', '"Network administration"'],
+  ['open_to', '["Web projects", "Data extraction"]'],
 ];
