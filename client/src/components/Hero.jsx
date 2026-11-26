@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { FaArrowDown, FaEnvelope, FaDownload } from 'react-icons/fa6';
 import { profile, socials } from '../data.js';
 
-const CV_URL = '/Sumba-William-CV.pdf'; // put your CV in the /public folder with this name
+const CV_URL = '/Sumba-William-CV.pdf'; 
 
-const roles = ['React Developer', 'Node & Express Developer', 'Web Scraping Specialist'];
+const roles = ['Full-Stack Developer',  'Web Scraping Specialist','Technical Consultant',  ];
 
 // What you can do for a client, in plain words (different from the tech lists in Skills).
 const offers = ['Web apps', 'APIs & backends', 'Custom scrapers', 'Data cleaning & pipelines'];
 
-// Cycles through a list of words; stays on the first one if the visitor prefers reduced motion.
+
 function useRotator(list, ms = 2400) {
   const [i, setI] = useState(0);
   useEffect(() => {
